@@ -109,21 +109,42 @@ function palindrome(str) {
   return true;
 }
 
+function anagram(arr) {
+  let anagrams = new HashMap();
+  let unique = [];
+  let result = [];
+  for (let i = 0; i < arr.length; i++) {
+    let sorted = arr[i].split('').sort().join('');
+    try {
+      let val = anagrams.get(sorted);
+      anagrams.set(sorted, [...val, arr[i]]);
+    } catch(err) {
+      unique.push(sorted);
+      anagrams.set(sorted, [arr[i]]);
+    }
+  }
+  for (let i = 0; i < unique.length; i++) {
+    result.push(anagrams.get(unique[i]));
+  }
+  return result;
+}
+
 function main() {
-  let lor = new HashMap();
-  lor.set('Hobbit', 'Bilbo');
-  lor.set('Hobbit', 'Frodo');
-  lor.set('Wizard', 'Gandolf');
-  lor.set('Human', 'Aragon');
-  lor.set('Elf', 'Legolas');
-  lor.set('Maiar', 'The Necromancer');
-  lor.set('Maiar', 'Sauron');
-  lor.set('RingBearer', 'Gollum');
-  lor.set('LadyOfLight', 'Galadriel');
-  lor.set('HalfEleven', 'Arwen');
-  lor.set('Ent', 'Treebeard');
-  console.log(lor);
-  console.log(lor.get('Maiar'));
-  console.log(palindrome('rraacce'))
+  // let lor = new HashMap();
+  // lor.set('Hobbit', 'Bilbo');
+  // lor.set('Hobbit', 'Frodo');
+  // lor.set('Wizard', 'Gandolf');
+  // lor.set('Human', 'Aragon');
+  // lor.set('Elf', 'Legolas');
+  // lor.set('Maiar', 'The Necromancer');
+  // lor.set('Maiar', 'Sauron');
+  // lor.set('RingBearer', 'Gollum');
+  // lor.set('LadyOfLight', 'Galadriel');
+  // lor.set('HalfEleven', 'Arwen');
+  // lor.set('Ent', 'Treebeard');
+  // console.log(lor);
+  // console.log(lor.get('Maiar'));
+  // console.log(palindrome('rraacce'))
+  console.log(anagram(['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']))
 }
 main();
