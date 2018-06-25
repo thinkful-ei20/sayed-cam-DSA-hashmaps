@@ -21,12 +21,14 @@ class HashMap {
     }
 
     const index = this._findSlot(key);
+    if (!this._slots[index]) {
+      this.length++;
+    }
     this._slots[index] = {
       key,
       value,
       deleted: false
     };
-    this.length++;
   }
 
   remove(key) {
@@ -82,24 +84,27 @@ HashMap.MAX_LOAD_RATIO = 0.9;
 HashMap.SIZE_RATIO = 3;
 
 function palindrome(str) {
-  const obj = new HashMap();
+  const word = new HashMap();
   let odd = 0;
+  let unique = '';
   for (let i = 0; i < str.length; i++) {
     let letter = str[i];
-    if(obj[letter] === undefined) {
-      obj[letter] = 1;
-    } else {
-      obj[letter]++;
+    try {
+      let val = word.get(letter);
+      word.set(letter, val+=1);
+    } catch(err) {
+      unique += letter;
+      word.set(letter, 1);
     }
   }
 
-  for (let key in obj) {
-    if (obj[key] % 2 !== 0) {
+  for (let i = 0; i < unique.length; i++) {
+    if (word.get(unique[i]) % 2 !== 0) {
       odd++;
     }
-    if (odd > 1) {
-      return false;
-    }
+  }
+  if (odd > 1) {
+    return false;
   }
   return true;
 }
